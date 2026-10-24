@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agent-dashboard",
+  "version": "0.1.0",
+  "description": "Local HTML dashboard your bot builds. Refresh is a plain script: no model calls, ~0.05 s CPU for 5 panels. No account.",
+  "author": {
+    "name": "howdyollie"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/howdyollie/agent-dashboard",
+  "repository": "https://github.com/howdyollie/agent-dashboard",
+  "keywords": [
+    "dashboard",
+    "analytics",
+    "local-first",
+    "self-hosted",
+    "x",
+    "twitter-stats",
+    "sales",
+    "ads",
+    "website-traffic",
+    "bot-monitoring",
+    "no-account",
+    "mcp",
+    "skills"
+  ]
+}

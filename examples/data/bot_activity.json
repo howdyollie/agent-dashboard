@@ -1,0 +1,40 @@
+{
+ "bots": [
+  {
+   "name": "Scout",
+   "status": "active",
+   "last_update": "2026-01-14T14:29:00+00:00",
+   "last_action": "Checked 14 sample sources"
+  },
+  {
+   "name": "Writer",
+   "status": "active",
+   "last_update": "2026-01-14T11:22:00+00:00",
+   "last_action": "Drafted 2 sample posts"
+  },
+  {
+   "name": "Archivist",
+   "status": "idle",
+   "last_update": "2026-01-15T10:33:00+00:00",
+   "last_action": "Filed the weekly sample report"
+  },
+  {
+   "name": "Courier",
+   "status": "idle",
+   "last_update": "2026-01-14T13:00:00+00:00",
+   "last_action": "Delivered sample digest"
+  },
+  {
+   "name": "Watcher",
+   "status": "paused",
+   "last_update": "2026-01-15T07:26:00+00:00",
+   "last_action": "Paused by owner (sample)"
+  },
+  {
+   "name": "Builder",
+   "status": "active",
+   "last_update": "2026-01-14T00:10:00+00:00",
+   "last_action": "Rebuilt the sample dashboard"
+  }
+ ]
+}

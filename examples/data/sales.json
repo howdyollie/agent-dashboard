@@ -1,0 +1,117 @@
+{
+ "currency": "USD",
+ "days": [
+  {
+   "date": "2026-01-02",
+   "orders": 1,
+   "revenue": 19
+  },
+  {
+   "date": "2026-01-03",
+   "orders": 0,
+   "revenue": 0
+  },
+  {
+   "date": "2026-01-04",
+   "orders": 1,
+   "revenue": 99.5
+  },
+  {
+   "date": "2026-01-05",
+   "orders": 5,
+   "revenue": 136.0
+  },
+  {
+   "date": "2026-01-06",
+   "orders": 0,
+   "revenue": 0
+  },
+  {
+   "date": "2026-01-07",
+   "orders": 4,
+   "revenue": 277.0
+  },
+  {
+   "date": "2026-01-08",
+   "orders": 2,
+   "revenue": 58.5
+  },
+  {
+   "date": "2026-01-09",
+   "orders": 6,
+   "revenue": 286.0
+  },
+  {
+   "date": "2026-01-10",
+   "orders": 2,
+   "revenue": 48.5
+  },
+  {
+   "date": "2026-01-11",
+   "orders": 0,
+   "revenue": 0
+  },
+  {
+   "date": "2026-01-12",
+   "orders": 3,
+   "revenue": 298.0
+  },
+  {
+   "date": "2026-01-13",
+   "orders": 5,
+   "revenue": 66.5
+  },
+  {
+   "date": "2026-01-14",
+   "orders": 0,
+   "revenue": 0
+  },
+  {
+   "date": "2026-01-15",
+   "orders": 3,
+   "revenue": 87
+  }
+ ],
+ "recent": [
+  {
+   "date": "2026-01-15",
+   "item": "Sticker pack",
+   "amount": 49
+  },
+  {
+   "date": "2026-01-15",
+   "item": "Template bundle",
+   "amount": 19
+  },
+  {
+   "date": "2026-01-15",
+   "item": "Starter plan",
+   "amount": 19
+  },
+  {
+   "date": "2026-01-13",
+   "item": "Consulting hour",
+   "amount": 9
+  },
+  {
+   "date": "2026-01-13",
+   "item": "Add-on credits",
+   "amount": 9.5
+  },
+  {
+   "date": "2026-01-13",
+   "item": "Pro plan",
+   "amount": 9.5
+  },
+  {
+   "date": "2026-01-13",
+   "item": "Add-on credits",
+   "amount": 19.5
+  },
+  {
+   "date": "2026-01-13",
+   "item": "Add-on credits",
+   "amount": 19
+  }
+ ]
+}

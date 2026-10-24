@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard</title><style>
+:root{--bg:#0b0c10;--side:#0b0c10;--card:#111319;--in:#0d0f14;--line:#1c1f28;--t:#e8eaf0;--m:#8b90a0;--a:#6366f1;--a2:#818cf8;--ok:#34d399;--warn:#fbbf24;--bad:#f87171}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:13px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
+button{font:inherit;color:inherit}
+/* sidebar */
+.side{position:fixed;inset:0 auto 0 0;width:140px;background:var(--side);border-right:1px solid var(--line);padding:12px 8px;display:flex;flex-direction:column;overflow-y:auto}
+.brand{display:flex;gap:8px;align-items:center;margin:0 4px 16px}.logo{flex:none;width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}.logo svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.brand b{display:block;font-size:12px;line-height:1.2}.brand small{display:block;font-size:10px;color:var(--m);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:92px}
+.lab{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:#656a7a;margin:6px 6px 6px}
+.nav a{display:flex;align-items:center;gap:8px;color:#b4b8c6;text-decoration:none;padding:6px 7px;border-radius:7px;margin-bottom:1px;font-size:12px}.nav a svg{flex:none;width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.nav a span.nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav a em{font-style:normal;font-size:10px;color:var(--m)}
+.nav a:hover,.nav a.on{background:#171a23;color:var(--t)}
+.pin a{display:flex;gap:8px;align-items:center;color:#b4b8c6;text-decoration:none;font-size:11.5px;padding:5px 7px;border-radius:7px}.pin a:hover{background:#171a23}.pin i{flex:none;width:7px;height:7px;border-radius:50%}.pin a span{min-width:0}
+.sp{flex:1;min-height:12px}
+.goal{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:8px 9px;margin-bottom:10px;font-size:10.5px}.goal .r{display:flex;justify-content:space-between;gap:6px;color:var(--m)}.goal .r b{color:var(--t);font-weight:600}
+.bar{height:5px;border-radius:9px;background:#1c1f28;margin:6px 0;overflow:hidden}.bar i{display:block;height:100%;background:var(--a);border-radius:9px}.bar i.st{background:var(--warn)}
+.me{display:flex;gap:8px;align-items:center;padding:4px}.me .av{width:24px;height:24px;font-size:9.5px}.me b{display:block;font-size:11.5px;line-height:1.2}.me small{font-size:10px;color:var(--m)}
+.av{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:700;background:#26293a;color:#a5b4fc}
+/* main */
+.main-wrap{margin-left:140px;padding:0 14px 20px;min-width:0}
+.tb{display:flex;align-items:center;gap:10px;padding:10px 0;position:relative}.crumb{font-size:12px;color:var(--m);white-space:nowrap}.crumb b{color:var(--t);font-weight:600}
+.srch{flex:0 1 330px;margin:0 auto;display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--m);min-width:0}.srch svg{flex:none;width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}.srch input{all:unset;flex:1;min-width:0;font-size:12px;color:var(--t)}.srch input::placeholder{color:var(--m)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 10px;font-size:11.5px;white-space:nowrap}.chip i{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 11px;font-size:12px;cursor:pointer;white-space:nowrap}.btn:hover{background:#171a23}.btn.pri{background:var(--a);border-color:var(--a);color:#fff;font-weight:600}.btn.pri:hover{background:#7174f3}
+.pop{position:absolute;right:0;top:46px;width:290px;max-width:calc(100vw - 24px);background:var(--card);border:1px solid #2a2e3b;border-radius:11px;padding:10px;z-index:60;box-shadow:0 14px 40px rgba(0,0,0,.55)}.pop[hidden]{display:none}.pop h4{margin:0 0 2px;font-size:12px}.pop p{margin:0 0 8px;font-size:11px;color:var(--m)}
+.lrow{display:flex;align-items:center;gap:8px;padding:7px 8px;margin-bottom:4px;border:1px solid var(--line);background:var(--in);border-radius:8px;font-size:12px}.lrow .handle{position:static}.lrow.lifting{box-shadow:0 10px 28px rgba(0,0,0,.6);border-color:var(--a);background:#171a2b}.lrow.ph,.card.ph{border:1.5px dashed var(--a);background:rgba(99,102,241,.08);box-shadow:none}.lrow.ph *{visibility:hidden}
+.pop .acts{display:flex;justify-content:flex-end;margin-top:8px}
+.hello{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 14px}h1{margin:0;font-size:19px;font-weight:650;letter-spacing:-.01em}.sub{color:var(--m);font-size:12px;margin-top:3px}
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:2px}.seg button{border:0;background:none;color:var(--m);font-size:11.5px;padding:3px 10px;border-radius:6px;cursor:default}.seg button.on{background:#232638;color:var(--t)}.seg button[disabled]{opacity:.45}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.kpi{position:relative;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 12px 10px;min-width:0;overflow:hidden}.kpi .l{font-size:11.5px;color:var(--t)}.kpi .l small{color:var(--m);font-size:11px;margin-left:3px}.kpi .n{font-size:25px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-top:5px}.kpi .n .na{font-size:12px;font-weight:400}.kpi .d{font-size:11px;color:var(--m);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.kpi svg.ks{position:absolute;right:10px;top:34px;width:70px;height:30px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}.card.w2{grid-column:span 2}.card.tall{grid-row:span 2;align-self:stretch;min-height:420px}
+.card.lifting{overflow:hidden;position:fixed!important;z-index:80;margin:0;pointer-events:none;transform:scale(1.015);box-shadow:0 18px 50px rgba(0,0,0,.65);border-color:var(--a);opacity:.96}
+.card.ph{min-height:80px}.card.ph>*{visibility:hidden}
+.handle{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:6px;border:1px solid transparent;background:none;display:grid;place-items:center;color:#6d7284;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding:0;z-index:3}.handle svg{width:12px;height:12px;fill:currentColor;pointer-events:none}.handle:hover,.handle.arming{background:#1b1e29;color:var(--t);border-color:var(--line)}.handle.arming{border-color:var(--a);color:var(--a2)}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-right:30px;min-height:24px}h2{margin:0;font-size:13.5px;font-weight:600}h2 small,h3 small{color:var(--m);font-weight:400;font-size:11.5px;margin-left:5px}h3{margin:14px 0 6px;font-size:12px;font-weight:600}
+.asof{font-size:10.5px;color:var(--m);margin:4px 0 8px}.asof i{opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:8px 0}
+.stat{background:var(--in);border:1px solid var(--line);border-radius:9px;padding:9px 10px;min-width:0}.stat .n{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--t)}.stat .l{font-size:11.5px;margin-top:2px}.stat .s{font-size:10.5px;color:var(--m);overflow-wrap:anywhere}
+.stat .n .na{font-size:12px;font-weight:400}.spark{width:100%;height:26px;margin-top:6px;fill:#4a4dc4}.spark.line polyline{stroke:var(--a2);stroke-width:1.8;fill:none}
+.pill{white-space:nowrap;display:inline-block;padding:1px 8px;border-radius:99px;font-size:10.5px;font-weight:600;margin-right:4px;background:#222533;color:var(--m)}
+.pill.ok{background:rgba(52,211,153,.14);color:var(--ok)}.pill.warn{background:rgba(251,191,36,.13);color:var(--warn)}.pill.bad{background:rgba(248,113,113,.14);color:var(--bad)}
+.src{font-size:10.5px;padding:2px 8px;border-radius:6px;background:rgba(52,211,153,.1);color:#6ee7b7}.src.warn{background:rgba(251,191,36,.12);color:var(--warn)}
+.na{color:#d0a94a;font-size:12px}.note{font-size:11px;color:var(--m);margin-top:6px;overflow-wrap:anywhere}.note.stale{color:#b59a5a}
+table{width:100%;border-collapse:collapse;font-size:11.5px}th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}td.tx{overflow-wrap:anywhere;word-break:break-word}td.n{white-space:nowrap;text-align:right}th.n{text-align:right}th{color:var(--m);font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0;background:var(--card)}.nw{white-space:nowrap}
+.scroll{max-height:260px;overflow:auto;margin:8px 0;border-radius:8px}.scroll.small{max-height:190px}
+ul.gaps{margin:8px 0;padding-left:0;list-style:none;font-size:12px}ul.gaps li{padding:5px 0 5px 12px;border-bottom:1px solid var(--line);overflow-wrap:anywhere;position:relative}ul.gaps li:before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--warn)}
+.next{margin-top:6px;font-size:12px}.rel{display:grid;gap:8px;font-size:12px}.rel div{background:var(--in);border:1px solid var(--line);border-radius:9px;padding:8px;overflow-wrap:anywhere}
+/* chart */
+.chart{position:relative;margin-top:10px}.chart svg{display:block;width:100%;height:auto}.chart .gl{stroke:#1c1f28;stroke-width:1}.chart text{fill:#6d7284;font-size:10px}
+.leg{display:flex;gap:12px;font-size:11px;color:var(--m)}.leg i{display:inline-block;width:8px;height:3px;border-radius:2px;background:var(--a2);margin-right:5px;vertical-align:middle}
+.tip{position:absolute;pointer-events:none;background:#151824;border:1px solid #2a2e3b;border-radius:7px;padding:5px 8px;font-size:11px;white-space:nowrap;transform:translate(-50%,-115%);box-shadow:0 6px 18px rgba(0,0,0,.5)}.tip small{display:block;color:var(--m);font-size:10px}.tip b{font-size:13px;font-weight:600}
+/* feed + bots */
+.feed{margin-top:8px}.fi{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line)}.fi:last-child{border:0}.fi .tx{flex:1;min-width:0;font-size:12px;color:#c3c6d2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}.fi .tx b{color:var(--t);font-weight:600}.fi .ag{font-size:10.5px;color:var(--m);white-space:nowrap}
+.bhead{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--m);margin:3px 0 8px;flex-wrap:wrap}.bhead b{color:var(--ok);font-weight:500}.bhead .w{color:var(--warn)}
+.blist{margin-top:6px}.brow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line)}.brow:last-child{border:0}.brow .mid{flex:1;min-width:0}.brow .mid b{display:block;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brow .mid small{display:block;font-size:10.5px;color:var(--m);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brow .rt{text-align:right;font-size:11px;white-space:nowrap}.brow .rt small{display:block;color:var(--m);font-size:10px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;background:#5a5f70}.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.stale{background:var(--bad)}
+.card.tall .blist{position:absolute;left:14px;right:10px;top:70px;bottom:12px;overflow:auto;padding-right:4px;margin:0}
+/* pipeline */
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.col{background:#0e1016;border:1px solid var(--line);border-radius:10px;padding:8px;min-width:0}.col h5{margin:0 0 7px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px}.col h5 i{width:7px;height:7px;border-radius:50%;background:var(--a2)}.col h5 em{margin-left:auto;font-style:normal;color:var(--m);font-weight:400}
+.pc{background:var(--card);border:1px solid #232634;border-radius:8px;padding:8px;margin-bottom:6px;font-size:11.5px;overflow-wrap:anywhere}.pc .mt{display:flex;gap:6px;align-items:center;margin-top:6px;font-size:10.5px;color:var(--m)}.pc .mt span{background:#1b1e29;border-radius:4px;padding:0 5px}.pc .up{color:var(--ok);margin-left:auto;background:none!important}
+.sample{background:#3a2e0e;color:#ffd978;border:1px solid #6b5418;border-radius:10px;padding:8px 12px;margin:0 0 10px;font-weight:600;font-size:12px}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card.tall{grid-row:auto;min-height:0}.card.tall .blist{position:static;max-height:460px}.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.side{position:sticky;top:0;inset:auto;width:auto;z-index:40;flex-direction:row;gap:4px;overflow-x:auto;padding:6px 8px;border-right:0;border-bottom:1px solid var(--line);height:auto}.brand,.lab,.pin,.sp,.goal,.me{display:none}.nav{display:flex;gap:2px}.nav a{white-space:nowrap;margin:0;padding:6px 9px}
+.main-wrap{margin-left:0;padding:0 10px 16px}.grid{grid-template-columns:1fr}.card.w2{grid-column:auto}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:last-child{grid-column:span 2}.srch,.crumb{display:none}.tb{flex-wrap:wrap;justify-content:flex-end}.tb .chip.d{display:none}.stat .n{font-size:22px}.board{grid-template-columns:1fr}.pop{top:42px}}
+.scrollb{max-height:340px;overflow:auto;padding-right:4px}.spark{height:46px}.chart{margin:6px 0}.chart svg{height:110px}
+</style></head><body><div id="app"></div><script>
+const D=/*__DATA_JSON__*/null;
+const E=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const na=r=>`<span class="na">n/a: ${E(r)}</span>`;
+const fmt=n=>n==null?'n/a':(typeof n==='number'?n.toLocaleString('en-US',{maximumFractionDigits:2}):E(n));
+const money=(n,c)=>n==null?'n/a':new Intl.NumberFormat('en-US',{style:'currency',currency:/^[A-Z]{3}$/.test(c)?c:'USD',maximumFractionDigits:2}).format(n);
+const pill=(t,k)=>`<span class="pill ${E(k)}">${E(t)}</span>`;
+const GRIP='<svg viewBox="0 0 12 12"><circle cx="3.5" cy="2.5" r="1.1"/><circle cx="8.5" cy="2.5" r="1.1"/><circle cx="3.5" cy="6" r="1.1"/><circle cx="8.5" cy="6" r="1.1"/><circle cx="3.5" cy="9.5" r="1.1"/><circle cx="8.5" cy="9.5" r="1.1"/></svg>';
+const ICON={x_stats:'<path d="M5 20V11M12 20V4M19 20v-6"/>',website_visits:'<circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/>',bot_activity:'<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01"/>',sales:'<path d="M3 17l6-6 4 4 8-9"/>',ads:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/>'};
+const ico=t=>`<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[t]||ICON.sales}</svg>`;
+const COLS=[['rgba(99,102,241,.22)','#a5b4fc'],['rgba(52,211,153,.16)','#6ee7b7'],['rgba(251,191,36,.16)','#fcd34d'],['rgba(244,114,182,.16)','#f9a8d4'],['rgba(56,189,248,.16)','#7dd3fc'],['rgba(248,113,113,.16)','#fca5a5']];
+const ini=n=>{const p=String(n).replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/);return((p[0]||'?')[0]+((p[1]||p[0]||'?')[p[1]?0:1]||'')).toUpperCase()};
+const av=n=>{let h=0;for(const c of String(n))h=(h*31+c.charCodeAt(0))>>>0;const c=COLS[h%COLS.length];return `<div class="av" style="background:${c[0]};color:${c[1]}">${E(ini(n))}</div>`};
+const clip=(s,n)=>String(s).length>n?String(s).slice(0,n-1)+'…':String(s);
+const stat=(l,n,s,sp)=>`<div class="stat"><div class="n">${n}</div><div class="l">${E(l)}</div><div class="s">${s||''}</div>${sp||''}</div>`;
+function bars(vals,labels,cls){vals=(vals||[]).map(Number);if(vals.length<2)return'';const w=240,h=46,mx=Math.max(...vals,1),n=vals.length,bw=w/n;
+ return `<svg class="spark ${cls||''}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="bar chart">`+vals.map((x,i)=>`<rect x="${(i*bw+1).toFixed(1)}" y="${(h-(x/mx)*(h-3)-1).toFixed(1)}" width="${Math.max(bw-2,1).toFixed(1)}" height="${((x/mx)*(h-3)+1).toFixed(1)}" rx="1.5"><title>${E((labels||[])[i]||'')}: ${E(x)}</title></rect>`).join('')+'</svg>';}
+function line(vals,labels){vals=(vals||[]).map(Number);if(vals.length<2)return'';const W=420,H=120,L=4,R=4,T=8,B=8,mx=Math.max(...vals,1),n=vals.length;
+ const X=i=>L+i*(W-L-R)/(n-1),Y=v=>T+(H-T-B)*(1-v/mx);const pts=vals.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1));
+ return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="line chart"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6366f1" stop-opacity=".45"/><stop offset="1" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs><polygon points="${L},${Y(0)} ${pts.join(' ')} ${X(n-1)},${Y(0)}" fill="url(#cg)"/><polyline points="${pts.join(' ')}" fill="none" stroke="#818cf8" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"><title>${E((labels||[])[0]||'')} to ${E((labels||[])[n-1]||'')}</title></polyline></svg></div>`;}
+const head=(p,sub)=>`<div class="ch"><h2>${E(p.title)}${sub?` <small>${E(sub)}</small>`:''}</h2>${p.source_mode==='sample'?'<span class="src warn">SAMPLE</span>':'<span class="src">live</span>'}</div>`+(p.asof?`<div class="asof">as of ${E(p.asof)}</div>`:'');
+const short=d=>String(d).slice(5);
+
+/* ---- panel renderers (each returns inner html for one panel type) ---- */
+const R={
+x_stats(p){const d=p.data,t=d.totals;
+ let h=head(p,'@'+d.handle)+'<div class="stats">'+stat('Followers',fmt(d.followers),d.following!=null?E(fmt(d.following)+' following'):'')
+  +stat('Impressions',fmt(t.impressions),E(t.n+' recent posts'),bars(d.series.map(s=>s.impressions),d.series.map(s=>s.label)))
+  +stat('Likes',fmt(t.likes))+stat('Reposts',fmt(t.reposts))+stat('Replies',fmt(t.replies))+'</div>';
+ h+=line(d.series.map(s=>s.impressions),d.series.map(s=>s.label));
+ if(d.posts.length){h+='<div class="scroll"><table><thead><tr><th>Posted</th><th>Post</th><th class="n">Imp</th><th class="n">Likes</th><th class="n">RT</th><th class="n">Re</th></tr></thead><tbody>'+d.posts.map(x=>`<tr><td class="nw">${E(x.time)}</td><td class="tx">${E(clip(x.text,140))}</td><td class="n">${fmt(x.impressions)}</td><td class="n">${fmt(x.likes)}</td><td class="n">${fmt(x.reposts)}</td><td class="n">${fmt(x.replies)}</td></tr>`).join('')+'</tbody></table></div>';}
+ else h+=na('no posts in source');return h;},
+website_visits(p){const d=p.data,days=d.days;
+ let h=head(p,d.site)+'<div class="stats">'+stat('Visits',fmt(d.total_visits),E(days.length+' days'),bars(days.map(x=>x.visits),days.map(x=>x.date)))
+  +stat('Page loads',fmt(d.total_loads))+stat('Avg / day',fmt(d.avg_per_day))+stat('Best day',fmt(d.best_day?d.best_day.visits:null),d.best_day?E(d.best_day.date):'')+'</div>';
+ h+=line(days.map(x=>x.visits),days.map(x=>x.date));
+ return h+`<div class="note">${E(days.length?short(days[0].date)+' to '+short(days[days.length-1].date):'no days')}</div>`;},
+sales(p){const d=p.data,days=d.days,c=d.currency;
+ let h=head(p,c)+'<div class="stats">'+stat('Revenue',money(d.totals.revenue,c),E(days.length+' days'),bars(days.map(x=>x.revenue),days.map(x=>x.date)))
+  +stat('Orders',fmt(d.totals.orders))+stat('Avg order',money(d.totals.avg_order,c))+'</div>';
+ if(d.recent.length)h+='<h3>Recent orders</h3><div class="scroll small"><table><thead><tr><th>Date</th><th>Item</th><th class="n">Amount</th></tr></thead><tbody>'+d.recent.map(x=>`<tr><td class="nw">${E(x.date)}</td><td class="tx">${E(x.item)}</td><td class="n">${money(x.amount,c)}</td></tr>`).join('')+'</tbody></table></div>';
+ else h+=`<div class="note">${na('no recent orders in source')}</div>`;return h;},
+ads(p){const d=p.data,days=d.days,t=d.totals,c=d.currency;
+ let h=head(p,d.platform)+'<div class="stats">'+stat('Impressions',fmt(t.impressions),E(days.length+' days'),bars(days.map(x=>x.impressions),days.map(x=>x.date)))
+  +stat('Clicks',fmt(t.clicks),t.ctr!=null?'CTR '+E(t.ctr)+'%':'',bars(days.map(x=>x.clicks),days.map(x=>x.date)))
+  +stat('Spend',money(t.spend,c))+stat('CPC',t.cpc!=null?money(t.cpc,c):'n/a')+'</div>';
+ if(days.length)h+='<div class="scroll small"><table><thead><tr><th>Date</th><th class="n">Impr.</th><th class="n">Clicks</th><th class="n">Spend</th></tr></thead><tbody>'+days.slice().reverse().map(x=>`<tr><td class="nw">${E(x.date)}</td><td class="n">${fmt(x.impressions)}</td><td class="n">${fmt(x.clicks)}</td><td class="n">${money(x.spend,c)}</td></tr>`).join('')+'</tbody></table></div>';
+ return h;},
+bot_activity(p){const d=p.data,k=d.counts;
+ let h=head(p,'who, doing what, last activity')+`<div class="bhead"><span><b>${k.active} active</b> · <span class="w">${k.idle} idle</span> · ${k.paused} paused${k.other?' · '+k.other+' other':''}</span></div><div class="blist scrollb">`;
+ for(const b of d.bots){const cls=b.stale?'stale':({active:'ok',idle:'warn'}[b.status]||'');
+  h+=`<div class="brow">${av(b.name)}<div class="mid"><b>${E(b.name)}</b><small title="${E(b.last_action)}">${b.last_action?E(b.last_action):'no activity text'}</small></div><div class="rt"><span class="dot ${cls}"></span>${E(b.status)}${b.stale?' · stale':''}<small>${E(b.age)}</small></div></div>`;}
+ return h+(d.bots.length?'':na('no bots in source'))+'</div>';}
+};
+function renderBody(p){
+ if(p.error)return `<div class="ch"><h2>${E(p.title)}</h2><span class="src warn">error</span></div><div class="note">${na(p.error)}</div>`;
+ try{return (R[p.type]||(()=>na('unknown panel type')))(p);}catch(e){return `<div class="ch"><h2>${E(p.title)}</h2></div>${na('render failed: '+e.message)}`;}}
+
+/* ---- order state ---- */
+const PANELS={};D.panels.forEach(p=>{PANELS[p.id]=p});
+const DEFAULT=D.panels.map(p=>p.id);
+const KEY='agent-dashboard-order-v1:'+(D.meta.key||'default');
+const ptitle=id=>PANELS[id].title;
+let order=loadOrder(),activeNav=DEFAULT[0];
+function loadOrder(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+ const out=[];if(Array.isArray(s))s.forEach(id=>{if(typeof id==='string'&&DEFAULT.includes(id)&&!out.includes(id))out.push(id)});
+ DEFAULT.forEach(id=>{if(!out.includes(id))out.push(id)});return out;}
+function saveOrder(){try{localStorage.setItem(KEY,JSON.stringify(order))}catch(e){}}
+function resetOrder(){try{localStorage.removeItem(KEY)}catch(e){}order=DEFAULT.slice();applyOrder();}
+const EL={};
+function applyOrder(){const g=document.getElementById('grid');order.forEach(id=>g.appendChild(EL[id]));renderNav();renderPop();}
+
+/* ---- pointer-based drag engine: press and hold a handle (~350 ms), then drag ---- */
+const HOLD_MS=350;
+function attachDrag(handle,item,container,vertical,onMove,onEnd){
+ let timer=null,sx=0,sy=0,cx=0,cy=0,pid=null,active=false,ph=null,ox=0,oy=0,raf=0,lastT=null,lastB=null,lastAt=0;
+ handle.addEventListener('contextmenu',e=>e.preventDefault());
+ handle.addEventListener('dragstart',e=>e.preventDefault());
+ const ids=()=>[...container.children].filter(c=>c!==item).map(c=>c===ph?item.dataset.pid:c.dataset.pid).filter(Boolean);
+ function cancel(){clearTimeout(timer);timer=null;handle.classList.remove('arming');try{handle.releasePointerCapture(pid)}catch(e){}}
+ function start(){active=true;handle.classList.remove('arming');const r=item.getBoundingClientRect();
+  ph=document.createElement('div');ph.className=item.className+' ph';ph.style.height=r.height+'px';ph.style.width='';ph.dataset.ph='1';
+  container.insertBefore(ph,item);ox=sx-r.left;oy=sy-r.top;
+  item.classList.add('lifting');item.style.left=r.left+'px';item.style.top=r.top+'px';item.style.width=r.width+'px';item.style.height=Math.min(r.height,vertical?r.height:200)+'px';
+  document.body.classList.add('dragging');loop();}
+ function place(){const w=item.offsetWidth;item.style.left=Math.max(6,Math.min(cx-ox,innerWidth-w-6))+'px';item.style.top=(cy-oy)+'px';
+  const kids=[...container.children].filter(k=>k!==item&&k!==ph&&k.dataset.pid);
+  const t=kids.find(k=>{const r=k.getBoundingClientRect();return cx>=r.left&&cx<=r.right&&cy>=r.top&&cy<=r.bottom});
+  if(!t)return;const r=t.getBoundingClientRect();
+  const single=vertical||getComputedStyle(container).gridTemplateColumns.split(' ').length<2;
+  const before=single?cy<r.top+r.height/2:cx<r.left+r.width/2;
+  if(t===lastT&&before===lastB&&performance.now()-lastAt<400)return;
+  lastT=t;lastB=before;lastAt=performance.now();
+  if(before)container.insertBefore(ph,t);else container.insertBefore(ph,t.nextSibling);
+  onMove&&onMove(ids());}
+ function loop(){if(!active)return;if(!vertical){if(cy<70)window.scrollBy(0,-14);else if(cy>innerHeight-70)window.scrollBy(0,14);}place();raf=requestAnimationFrame(loop);}
+ function end(){active=false;cancelAnimationFrame(raf);
+  container.insertBefore(item,ph);ph.remove();ph=null;
+  item.classList.remove('lifting');['left','top','width','height'].forEach(p=>item.style[p]='');
+  document.body.classList.remove('dragging');lastT=null;lastB=null;
+  try{handle.releasePointerCapture(pid)}catch(e){}
+  onEnd&&onEnd([...container.children].map(c=>c.dataset.pid).filter(Boolean));}
+ handle.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;if(active||timer)return;
+  sx=cx=e.clientX;sy=cy=e.clientY;pid=e.pointerId;try{handle.setPointerCapture(pid)}catch(_){}
+  handle.classList.add('arming');timer=setTimeout(()=>{timer=null;start()},HOLD_MS);});
+ const mv=e=>{if(e.pointerId!==pid)return;cx=e.clientX;cy=e.clientY;if(timer&&Math.hypot(cx-sx,cy-sy)>10)cancel();};
+ const up=e=>{if(e.pointerId!==pid)return;if(timer)cancel();else if(active)end();};
+ /* listen on window too, so a drag still ends/moves if pointer capture is lost (lifted card has pointer-events:none) */
+ window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);
+}
+
+/* ---- nav, layout popover ---- */
+function renderNav(){const el=document.getElementById('nav');if(!el)return;
+ el.innerHTML=order.map(id=>{const p=PANELS[id];return `<a href="#p-${E(id)}" data-nav="${E(id)}"${id===activeNav?' class="on"':''}>${ico(p.type)}<span class="nm">${E(p.title)}</span></a>`}).join('');}
+function renderPop(){const l=document.getElementById('plist');if(!l)return;
+ l.innerHTML=order.map(id=>`<div class="lrow" data-pid="${E(id)}"><button class="handle" type="button" aria-label="Drag to reorder ${E(ptitle(id))}">${GRIP}</button><span>${E(ptitle(id))}</span></div>`).join('');
+ [...l.children].forEach(r=>attachDrag(r.querySelector('.handle'),r,l,true,ids=>{order=ids;const g=document.getElementById('grid');order.forEach(id=>g.appendChild(EL[id]));renderNav();},ids=>{order=ids;saveOrder();applyOrder();}));
+ const ex=document.getElementById('export');if(ex)ex.value=JSON.stringify(order);}
+function panel(id){const p=PANELS[id];const s=document.createElement('section');s.className='card'+(p.span===2?' w2':'');s.id='p-'+id;s.dataset.pid=id;
+ s.innerHTML=`<button class="handle" type="button" aria-label="Reorder ${E(p.title)}: press and hold, then drag" title="Press and hold, then drag">${GRIP}</button>`+renderBody(p);
+ attachDrag(s.querySelector('.handle'),s,document.getElementById('grid'),false,ids=>{order=ids;renderNav();renderPop();},ids=>{order=ids;saveOrder();renderNav();renderPop();});return s;}
+
+function render(){const m=D.meta;document.title=m.title;
+ const anySample=D.panels.some(p=>p.source_mode==='sample');
+ const banner=anySample?'<div class="sample">SAMPLE DATA: panels tagged SAMPLE show generated fictional numbers, not your real data.</div>':'';
+ const errs=D.panels.filter(p=>p.error).length;
+ document.getElementById('app').innerHTML=`<aside class="side"><div class="brand"><div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg></div><div><b>${E(m.title)}</b><small>${D.panels.length} panels</small></div></div>
+<div class="lab">Panels</div><nav class="nav" id="nav"></nav><div class="sp"></div></aside>
+<main class="main-wrap">
+<div class="tb"><div class="crumb">${E(m.title)} / <b>Overview</b></div><div style="flex:1"></div>
+<span class="chip"><i></i>Built ${E(m.built)}</span>
+<button class="btn" id="reset" type="button">Reset layout</button><button class="btn pri" id="lay" type="button" aria-expanded="false">Layout</button>
+<div class="pop" id="pop" hidden><h4>Panel order</h4><p>Press and hold a handle, then drag. Saved in this browser. To make it permanent, give the order below to your bot (reorder_panels).</p><div id="plist"></div><input id="export" readonly aria-label="Current panel order as JSON" style="width:100%;margin-top:6px;background:var(--in);border:1px solid var(--line);color:var(--t);border-radius:6px;padding:4px 6px;font:11px monospace"><div class="acts"><button class="btn" id="reset2" type="button">Reset layout</button></div></div></div>
+${banner}<div class="hello"><div><h1>${E(m.title)}</h1><div class="sub">Built ${E(m.built)} (${E(m.tz)}) by a plain script, local files only${errs?'. '+errs+' panel(s) failed, see below':''}.</div></div></div>
+<div class="grid" id="grid"></div></main>`;
+ const g=document.getElementById('grid');DEFAULT.forEach(id=>{EL[id]=panel(id);});order.forEach(id=>g.appendChild(EL[id]));renderNav();renderPop();
+ if(!DEFAULT.length)g.innerHTML='<div class="note">No panels yet. Ask your bot to add one.</div>';
+ const pop=document.getElementById('pop'),lay=document.getElementById('lay');
+ lay.onclick=e=>{e.stopPropagation();pop.hidden=!pop.hidden;lay.setAttribute('aria-expanded',String(!pop.hidden));};
+ pop.addEventListener('click',e=>e.stopPropagation());
+ document.addEventListener('click',()=>{if(!document.body.classList.contains('dragging')){pop.hidden=true;lay.setAttribute('aria-expanded','false');}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){pop.hidden=true;}});
+ document.getElementById('reset').onclick=resetOrder;document.getElementById('reset2').onclick=resetOrder;
+ document.getElementById('nav').addEventListener('click',e=>{const a=e.target.closest('a');if(a){activeNav=a.dataset.nav;renderNav();}});}
+render();
+</script></body></html>

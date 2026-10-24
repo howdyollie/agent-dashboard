@@ -1,0 +1,15 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "dashboard": {
+      "type": "stdio",
+      "command": "python3",
+      "args": [
+        "-c",
+        "import os,sys,runpy;a=[x for x in sys.argv[1:] if os.path.isfile(os.path.join(x,'server','mcp_server.py'))];p=os.path.join(a[0] if a else os.getcwd(),'server','mcp_server.py');sys.argv=[p];runpy.run_path(p,run_name='__main__')",
+        "${PLUGIN_ROOT}",
+        "${CURSOR_PLUGIN_ROOT}"
+      ]
+    }
+  }
+}

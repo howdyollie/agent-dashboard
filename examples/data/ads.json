@@ -1,0 +1,48 @@
+{
+ "platform": "Example Ads",
+ "currency": "USD",
+ "days": [
+  {
+   "date": "2026-01-09",
+   "impressions": 1470,
+   "clicks": 40,
+   "spend": 27.7
+  },
+  {
+   "date": "2026-01-10",
+   "impressions": 2645,
+   "clicks": 72,
+   "spend": 29.29
+  },
+  {
+   "date": "2026-01-11",
+   "impressions": 1555,
+   "clicks": 27,
+   "spend": 18.65
+  },
+  {
+   "date": "2026-01-12",
+   "impressions": 1706,
+   "clicks": 42,
+   "spend": 30.14
+  },
+  {
+   "date": "2026-01-13",
+   "impressions": 2070,
+   "clicks": 32,
+   "spend": 22.14
+  },
+  {
+   "date": "2026-01-14",
+   "impressions": 2414,
+   "clicks": 33,
+   "spend": 17.35
+  },
+  {
+   "date": "2026-01-15",
+   "impressions": 2084,
+   "clicks": 23,
+   "spend": 19.3
+  }
+ ]
+}

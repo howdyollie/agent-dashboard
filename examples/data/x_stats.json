@@ -1,0 +1,71 @@
+{
+ "handle": "example_handle",
+ "followers": 979,
+ "following": 89,
+ "posts": [
+  {
+   "time": "2026-01-14 22:00",
+   "text": "Shipped a small update today #1",
+   "impressions": 3818,
+   "likes": 100,
+   "reposts": 33,
+   "replies": 23
+  },
+  {
+   "time": "2026-01-14 11:00",
+   "text": "Three tips for faster builds #2",
+   "impressions": 2667,
+   "likes": 70,
+   "reposts": 16,
+   "replies": 11
+  },
+  {
+   "time": "2026-01-14 00:00",
+   "text": "Behind the scenes: our sample week #3",
+   "impressions": 1375,
+   "likes": 33,
+   "reposts": 8,
+   "replies": 6
+  },
+  {
+   "time": "2026-01-13 13:00",
+   "text": "Question of the day: what are you building? #4",
+   "impressions": 573,
+   "likes": 22,
+   "reposts": 3,
+   "replies": 2
+  },
+  {
+   "time": "2026-01-13 02:00",
+   "text": "New sample post about dashboards #5",
+   "impressions": 1061,
+   "likes": 22,
+   "reposts": 9,
+   "replies": 7
+  },
+  {
+   "time": "2026-01-12 15:00",
+   "text": "Quick thread on automation #6",
+   "impressions": 3722,
+   "likes": 137,
+   "reposts": 31,
+   "replies": 22
+  },
+  {
+   "time": "2026-01-12 04:00",
+   "text": "Release notes for the example product #7",
+   "impressions": 2842,
+   "likes": 56,
+   "reposts": 22,
+   "replies": 18
+  },
+  {
+   "time": "2026-01-11 17:00",
+   "text": "Sample poll: tabs or spaces? #8",
+   "impressions": 2038,
+   "likes": 59,
+   "reposts": 11,
+   "replies": 8
+  }
+ ]
+}
